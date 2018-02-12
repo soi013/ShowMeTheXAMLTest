@@ -1,0 +1,146 @@
+﻿<Window
+    x:Class="ShowMeTheXAMLTest.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:local="clr-namespace:ShowMeTheXAMLTest"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    Title="MainWindow"
+    Width="825"
+    Height="800"
+    Background="LightGray"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <smtx:XamlFormatter x:Key="xamlFormatter">
+            <smtx:XamlFormatter.NamespacesToRemove>
+                <system:String>clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML</system:String>
+                <system:String>clr-namespace:ShowMeTheXAMLTest</system:String>
+                <system:String>clr-namespace:System;assembly=mscorlib</system:String>
+            </smtx:XamlFormatter.NamespacesToRemove>
+        </smtx:XamlFormatter>
+        <Style
+            x:Key="NoFormatter"
+            BasedOn="{StaticResource AvalonEditXamlDisplay}"
+            TargetType="{x:Type smtx:XamlDisplay}">
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Background" Value="LightSlateGray" />
+        </Style>
+        <Style BasedOn="{StaticResource NoFormatter}" TargetType="{x:Type smtx:XamlDisplay}">
+            <Setter Property="Formatter" Value="{StaticResource xamlFormatter}" />
+        </Style>
+
+        <Style TargetType="StackPanel">
+            <Setter Property="Margin" Value="5" />
+        </Style>
+    </Window.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <TextBlock Text="1- このTextBlockはXamlDisplayの外" />
+            <smtx:XamlDisplay Key="Unique1">
+                <StackPanel>
+                    <Button Content="Some Content" />
+                    <!--  コメントも表示される  -->
+                    <TextBlock Text="Some Text" />
+                </StackPanel>
+            </smtx:XamlDisplay>
+
+            <TextBlock Text="2- このTextBlockはXamlDisplayの外" />
+            <smtx:XamlDisplay Key="Unique2" Padding="5">
+                <Grid Width="300">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Menu Grid.Row="0" Grid.ColumnSpan="2">
+                        <MenuItem Header="File" />
+                        <MenuItem Header="Edit" />
+                    </Menu>
+                    <CheckBox
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Content="Some Text1" />
+                    <Calendar Grid.Row="1" Grid.Column="1" />
+                    <Button
+                        Grid.Row="2"
+                        Grid.ColumnSpan="2"
+                        Content="BUTTON" />
+                </Grid>
+            </smtx:XamlDisplay>
+
+            <TextBlock Text="3- このTextBlockはXamlDisplayの外" />
+            <smtx:XamlDisplay Key="Unique3">
+                AAAA
+            </smtx:XamlDisplay>
+
+            <StackPanel Orientation="Vertical">
+                <FrameworkElement.Resources>
+                    <Style BasedOn="{StaticResource {x:Type StackPanel}}" TargetType="StackPanel">
+                        <Setter Property="Orientation" Value="Horizontal" />
+                        <Setter Property="Margin" Value="1" />
+                    </Style>
+                    <Style BasedOn="{StaticResource {x:Type smtx:XamlDisplay}}" TargetType="{x:Type smtx:XamlDisplay}">
+                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="BorderBrush" Value="LightCyan" />
+                    </Style>
+                </FrameworkElement.Resources>
+                <TextBlock Text="4- XAMLを表示するXAMLを表示するXAMLを表示するXAML- このTextBlockはXamlDisplayの外" />
+                <smtx:XamlDisplay Key="Unique4-1">
+                    <StackPanel>
+                        <TextBlock Text="4-1" />
+                        <smtx:XamlDisplay Key="4-2">
+                            <StackPanel>
+                                <TextBlock Text="4-2" />
+                                <smtx:XamlDisplay Key="Unique4-3">
+                                    <StackPanel>
+                                        <TextBlock Text="4-3" />
+                                        <smtx:XamlDisplay Key="Unique4-4">
+                                            <TextBlock Text="4-4" />
+                                        </smtx:XamlDisplay>
+                                    </StackPanel>
+                                </smtx:XamlDisplay>
+                            </StackPanel>
+                        </smtx:XamlDisplay>
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </StackPanel>
+
+            <TextBlock Text="5-Formatterなし このTextBlockはXamlDisplayの外" />
+            <smtx:XamlDisplay Key="Unique5" Style="{StaticResource NoFormatter}">
+                <StackPanel>
+                    <local:UserControl1 />
+                    <Label>
+                        <system:Double>123</system:Double>
+                    </Label>
+                </StackPanel>
+            </smtx:XamlDisplay>
+
+            <TextBlock Text="6-Formatterあり このTextBlockはXamlDisplayの外" />
+            <!--<smtx:XamlDisplay Key="Unique6">-->
+            <smtx:XamlDisplay Key="Unique6" Formatter="{StaticResource xamlFormatter}">
+                <StackPanel>
+                    <local:UserControl1 />
+                    <Label>
+                        <system:Double>123</system:Double>
+                    </Label>
+                </StackPanel>
+            </smtx:XamlDisplay>
+
+            <TextBlock Text="8- このTextBlockはXamlDisplayの外" />
+            <smtx:XamlDisplay Key="Unique8">
+                <StackPanel>
+                    <TextBlock x:Name="tb1" Text="Some Text1" />
+                    <Button Click="Button_Click" Content="BUTTON" />
+                </StackPanel>
+            </smtx:XamlDisplay>
+        </StackPanel>
+    </ScrollViewer>
+</Window>
